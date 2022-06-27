@@ -7,7 +7,6 @@ export const Footer: FC = () => {
 
   return (
     <footer className="footer" style={{ backgroundImage: `url(${footer})` }}>
-
     </footer>
   )
 }
