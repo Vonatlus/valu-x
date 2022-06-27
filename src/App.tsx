@@ -1,24 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
+import { FC, useContext } from 'react';
+import Header from './components/Header';
+import Main from './components/Main';
+import Footer from './components/Footer';
+import LeftPanel from './components/LeftPanel';
+import RightPanel from './components/RightPanel';
 import './App.css';
+import PICTURES from './images';
+import { ValuX } from './ValuXContext';
 
-function App() {
+const images = [PICTURES.dogs, PICTURES.cats, PICTURES.chubaka, PICTURES.dyno, PICTURES.planets];
+
+const App: FC = () => {
+  const { setFooter, setHeader, setLeftPanel, setRightPanel, setMain } = useContext(ValuX);
+
+  const randomizer = () => {
+    let index = [0, 1, 2, 3, 4],
+      randomIndex = [],
+      i = index.length,
+      j = 0;
+
+    while (i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      randomIndex.push(index[j]);
+      index.splice(j, 1);
+    }
+
+    setMain(images[randomIndex[0]]);
+    setFooter(images[randomIndex[1]]);
+    setHeader(images[randomIndex[2]]);
+    setLeftPanel(images[randomIndex[3]]);
+    setRightPanel(images[randomIndex[4]]);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <div className="container">
+        <LeftPanel />
+        <Main />
+        <RightPanel />
+      </div>
+      <Footer />
+      <button className="btn" onClick={randomizer}>Random</button>
     </div>
   );
 }
